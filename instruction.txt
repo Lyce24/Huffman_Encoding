@@ -1,0 +1,17 @@
+It's now time to connect all the pieces together. For this part, you'll write two program (two new .cc files with a main function in each). One in encoder.cc, and one in decoder.cc.
+
+The former is a program that takes another filename as a command-line argument. It then reads and compresses the file into an output file of the same name with a .comp suffix.
+
+So, for example, after implementing and compiling the encoder, you'd be able to do something like:
+
+./encoder bitio.cc
+And when the program completes there'll be a new binary file in your directory called bitio.cc.comp. When I run this on my computer I get:
+
+fries-12:58:53>~/Dropbox/reed/c221f21/huffman$ ls -l bitio.cc*
+-rw-rw-r-- 1 eitan eitan 1397 Oct 15 14:17 bitio.cc
+-rw-rw-r-- 1 eitan eitan 1111 Nov 1 12:58 bitio.cc.comp
+The decoder program takes in a filename as well, reads it, and decompressed it into a file with the same name and a .plaintext suffix. So, for example, running ./decoder bitio.cc.comp should produce a bitio.cc.comp.plaintext file in the current directory. It should be identical to bitio.cc.
+
+In both instances, try to challenge yourself to take more than a single command-line argument, so that your encoder actually compresses all the filenames given as input, and the decoder decompresses all of its inputs as well.
+
+Hint: your main decoder loop might look something like this: ``` while (true) { while (symbol > 0) { symbol = huff.decode(bitio.input_bit()); } if (symbol == Huffman::HEOF) { break; } else { out.put(symbol); symbol = -1; } }
